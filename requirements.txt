@@ -1,0 +1,4 @@
+requests==2.14.2
+osmnx==0.5.3
+geopandas==0.2.1
+

@@ -1,0 +1,4 @@
+*.pyc
+.ropeproject
+models/*
+.DS_Store

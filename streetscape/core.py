@@ -29,12 +29,13 @@ def get_street_views(lid, lat, lng, save_dir, fov=20, pad=2):
             image_file.write(res.content)
 
 
-def get_street_views_from_df(df, save_dir, fov=20, pad=2):
-
+def get_street_views_from_df(df, save_dir="output", geom="obs_point",
+                             pic_per_obs=4, pad=2):
+    fov = 360.0 / pic_per_obs;
     def apply_obs_gsv(row):
         lid = row.name
-        lat = row['obs_point'].y
-        lng = row['obs_point'].x
+        lat = row[geom].y
+        lng = row[geom].x
         get_street_views(lid, lat, lng, save_dir, fov, pad)
 
     df.apply(apply_obs_gsv, axis=1)

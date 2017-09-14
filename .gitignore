@@ -2,3 +2,5 @@
 .ropeproject
 models/*
 .DS_Store
+dist
+streetscape.egg-info

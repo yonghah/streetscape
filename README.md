@@ -3,15 +3,21 @@ collect panoramic street views in a city
 
 ### Set up
 
-#### 1. Clone repository
+#### 1. Install osmnx
 ```
-git clone git@github.com:yonghah/streetscape.git
-cd streetscape
+conda install -c conda-forge osmnx
 ```
+Or 
+```
+pip install osmnx
+```
+See here for details:
+https://github.com/gboeing/osmnx
 
-#### 2. Install package
+
+#### 2. Install streetscape
 ```
-pip install .
+pip install streetscape
 ```
 
 #### 3. Set GSV_API_KEY

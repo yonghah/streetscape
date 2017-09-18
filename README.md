@@ -21,12 +21,17 @@ pip install streetscape
 ```
 
 #### 3. Set GSV_API_KEY
+linux and macosx
 ```
 export GSV_API_KEY=YOUR_GOOGLE_STREET_VIEW_API_KEY
 ```
+windows
+```
+set GSV_API_KEY=YOUR_GOOGLE_STREET_VIEW_API_KEY
+```
 
 ### Use
-```
+```python
 import streetscape as ss
 # get all street midpoints in a city 
 obs = ss.create_observation_points('Haywards Heath, UK')

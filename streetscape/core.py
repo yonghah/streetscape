@@ -57,7 +57,7 @@ def create_observation_points(city):
 def convert_graph_to_gdf(graph):
     streets = []
     for edge in graph.edges(data=True):
-        street = {'osm_u':edge[0], 'osm_v': edge[1], **edge[2]}
+        street = merge_dicts({'osm_u':edge[0], 'osm_v': edge[1]}, edge[2])
         streets.append(street)
     for street in streets:
         if 'geometry' not in street:
@@ -69,4 +69,15 @@ def convert_graph_to_gdf(graph):
     converted = gpd.GeoDataFrame(streets)[
         ['osmid', 'name', 'length', 'geometry']]
     return converted
+
+
+def merge_dicts(*dict_args):
+    """
+    Given any number of dicts, shallow copy and merge into a new dict,
+    precedence goes to key value pairs in latter dicts.
+    """
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
 

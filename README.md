@@ -4,6 +4,8 @@ Streetscape helps to sample google street views in a city. You can get Google st
 
 Streetscape first creates observation points; then, it gets google street views from each points. Observation points are generated using [osmnx](https://github.com/gboeing/osmnx). osmnx imports street segments from osm database by setting the geographical boundary by place name, bounding box, and center-and-radius. From the imported street segments, Streetscape creates observation points by selecting midpoints of each street segment. Streetscape collects a specified number (pic_per_obs) of google street views from each observation point and save them to local storage.
 
+![image_all](https://user-images.githubusercontent.com/3218468/35771925-e17728e8-0902-11e8-9a3a-3eeadb302764.png)
+
 ### Set up
 
 #### 1. Install osmnx

@@ -107,10 +107,9 @@ class GridBuilder:
         at obs point location'''
         lat = obs_point.geometry.y
         lng = obs_point.geometry.x
-        api_key = os.environ['GSV_API_KEY']
         base = "https://maps.googleapis.com/maps/api/streetview/metadata?"
         latlng = "location={},{}".format(lat, lng)
         key = "key={}".format(api_key)
         source = "source=outdoor"
-        url = "{}&{}&{}&{}".format(base, latlng, source, key)
+        url = "{}&{}&{}".format(base, latlng, source)
         return url

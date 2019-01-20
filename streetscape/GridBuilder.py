@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import math 
 import numpy as np
 import pandas as pd
@@ -10,21 +12,56 @@ import geopandas as gpd
 
 
 class GridBuilder:
-    ''' class Grid creates 1d grid along with street segments geodataframe'''
+    ''' creates 1d grid along with street segments 
+
+    Attributes:
+        distance : float
+            distance between grid 
+        normalized : bool
+            If True, distance is relative value; otherwise absolute.
+            When normalized is True, distance should be [0,1]
+        seg_end : bool
+            if true, force to include both ends of a segment
+        end_gap_dist : float
+            gap threshold between grid point and seg_end
+        segment_id: string
+            name of column contains street segment id
+        
+        segment_gdf: GeoDataFrame 
+            geodataframe for street segments (input)
+        grid_gdf: GeoDataFrame 
+            geodataframe for grid points (output)
+
+    Methods:
+        create(gdf)
+            create grid geodataframe
+        graph2gdf(graph)
+            convert osmnx graph to geodataframe
+    Example:
+        $ gb = GribBuilder(distance=10.0)
+        $ grid_gdf = gb.create(street_gdf)
+    '''
     
-    def __init__(self):
-        self.distance = 10
-        self.normalized = False
-        self.seg_end = True
-        self.gdf = None
-        self.end_gap_dist = 0.001 # gap threshold for seg_end
-        self.segment_id = 'osmid'
+    def __init__(self, 
+                 distance=10.0, 
+                 normalized=False, 
+                 seg_end=True, 
+                 end_gap_dist=0.001, 
+                 segment_id = 'osmid'):
+
+        self.distance = distance
+        self.normalized = normalized
+        self.seg_end = seg_end
+        self.end_gap_dist = end_gap_dist
+        self.segment_id = segment_id
+        
+        self.segment_gdf = None
         self.grid_gdf = None
     
     def create(self, gdf):
         ''' create grid geodataframe'''
-        self.gdf = gdf
-        r = self.gdf\
+        self.segment_gdf = gdf
+        r = self.segment_gdf\
             .apply(self._create_grid_row, axis=1)\
             .sum()
         self.grid_gdf = gpd.GeoDataFrame(r)
@@ -36,6 +73,7 @@ class GridBuilder:
         return self.grid_gdf
         
     def graph2gdf(self, graph):
+        '''convert osmnx graph to geodataframe'''
         streets = []
         for edge in graph.edges(data=True):
             street = {**{'osm_u': edge[0], 'osm_v': edge[1]}, **edge[2]}
@@ -109,7 +147,6 @@ class GridBuilder:
         lng = obs_point.geometry.x
         base = "https://maps.googleapis.com/maps/api/streetview/metadata?"
         latlng = "location={},{}".format(lat, lng)
-        key = "key={}".format(api_key)
         source = "source=outdoor"
         url = "{}&{}&{}".format(base, latlng, source)
         return url

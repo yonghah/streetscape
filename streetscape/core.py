@@ -5,11 +5,15 @@ import os
 import asyncio
 import async_timeout
 import ssl
+import warnings
 
 import numpy as np
 import pandas as pd
 import aiohttp
-from tqdm.autonotebook import tqdm
+
+with warnings.catch_warnings():
+   warnings.filterwarnings("ignore")
+   from tqdm.autonotebook import tqdm
 
 import geopandas as gpd
 from shapely.geometry import Point

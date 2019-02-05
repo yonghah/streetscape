@@ -9,7 +9,6 @@ import ssl
 import numpy as np
 import pandas as pd
 import aiohttp
-from pypeln import asyncio_task as aio
 from tqdm.autonotebook import tqdm
 
 import geopandas as gpd

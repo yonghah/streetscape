@@ -34,3 +34,5 @@ Steps:
 - check whether gsv exists on each observation points and get panoID
 - retrieve gsv images from each observation point
 
+See the notebooke in the sample directory:
+https://github.com/yonghah/streetscape/blob/master/sample/example.ipynb

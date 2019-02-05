@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(name='streetscape',
-      version='0.1.3',
+      version='0.1.5',
       description='help to collect panoramic street view in a city',
       url='http://github.com/yonghah/streetscape',
-      download_url='http://github.com/yonghah/streetscape/tarball/0.1.3',
+      download_url='http://github.com/yonghah/streetscape/tarball/0.1.5',
       author='Yongha Hwang',
       author_email='yongha.hwang@gmail.com',
       license='MIT',

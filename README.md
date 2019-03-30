@@ -1,6 +1,6 @@
 # Streetscape
 
-Streetscape helps to retrieve google street views in a city. 
+Streetscape helps to retrieve google street views in a city. This package uses Google's official streetview API only. So finding the locations of GSV is less efficient than utilizing unofficial/undocumented API such as http://cbk0.google.com/cbk. 
 
 ![image_all](https://user-images.githubusercontent.com/3218468/35771925-e17728e8-0902-11e8-9a3a-3eeadb302764.png)
 

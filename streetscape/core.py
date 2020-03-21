@@ -11,10 +11,6 @@ import numpy as np
 import pandas as pd
 import aiohttp
 
-with warnings.catch_warnings():
-   warnings.filterwarnings("ignore")
-   from tqdm.autonotebook import tqdm
-
 import geopandas as gpd
 from shapely.geometry import Point
 from shapely.geometry import LineString
@@ -88,7 +84,7 @@ def identify_gsv_locations(grid_gdf, max_conn=50, max_sem=10, timeout=0):
         the retrieved result;
         timeout argument;
     '''
-    responses = _retrieve_metadata(grid_gdf, max_conn, max_sem, timeout)
+    responses = retrieve_metadata(grid_gdf, max_conn, max_sem, timeout)
     res_df = pd.DataFrame.from_records(responses)
     res_df = res_df[res_df['status'] == 'OK']
     res_df['geometry']  = res_df.apply(
@@ -157,10 +153,7 @@ def download_gsvs(gsv_df, save_dir='', max_conn=50, max_sem=10, timeout=0):
                 task = asyncio.ensure_future(fetch(session, gsv, sem))
                 tasks.append(task)
             
-            #results = await asyncio.gather(*tasks, return_exceptions=True)
-            results = [await f
-                for f in tqdm(asyncio.as_completed(tasks), 
-                total=len(tasks))]
+            results = await asyncio.gather(*tasks, return_exceptions=True)
             
     loop = asyncio.get_event_loop()
     loop.run_until_complete(fetch_all(gsv_df.to_records(), loop))
@@ -211,7 +204,7 @@ def _image_name(gsv_point, heading, **kwargs):
         "jpg")
 
 
-def _retrieve_metadata(grid_gdf, max_conn, max_sem, timeout):
+def retrieve_metadata(grid_gdf, max_conn, max_sem, timeout):
     ''' asynchronous collecting gsv info nearby grid points'''
     urls = list(grid_gdf['metadata_url'])
     key = os.environ['GSV_API_KEY']
@@ -235,10 +228,7 @@ def _retrieve_metadata(grid_gdf, max_conn, max_sem, timeout):
                 task = asyncio.ensure_future(fetch(session, url, sem))
                 tasks.append(task)
 
-            # results = await asyncio.gather(*tasks, return_exceptions=True)
-            results = [await f
-                for f in tqdm(asyncio.as_completed(tasks), 
-                total=len(tasks))]
+            results = await asyncio.gather(*tasks, return_exceptions=True)
 
             return results
 
